@@ -1,0 +1,975 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Generator}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}567}]:} \PY{c+c1}{\PYZsh{} \PYZhy{}*\PYZhy{} coding: utf\PYZhy{}8 \PYZhy{}*\PYZhy{}}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}    \PY{c+c1}{\PYZsh{} import matplotlib}
+          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}                 \PY{c+c1}{\PYZsh{} import numpy}
+          \PY{k+kn}{import} \PY{n+nn}{scipy} \PY{k}{as} \PY{n+nn}{sp}                 \PY{c+c1}{\PYZsh{} import scipy}
+          \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}
+          \PY{k+kn}{import} \PY{n+nn}{math}                        \PY{c+c1}{\PYZsh{} import basic math functions}
+          \PY{k+kn}{import} \PY{n+nn}{random}                      \PY{c+c1}{\PYZsh{} import basic random number generator functions}
+          \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+          \PY{k+kn}{import} \PY{n+nn}{jieba} \PY{k}{as} \PY{n+nn}{jb}
+          \PY{k+kn}{from} \PY{n+nn}{itertools} \PY{k}{import} \PY{n}{combinations}\PY{p}{,} \PY{n}{permutations}\PY{p}{,} \PY{n}{repeat}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}491}]:} \PY{o}{!} ls
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Chinese Lexicon Project (Tse, 2017).csv SUBTLEX\_CH\_shortened.csv
+SUBTLEX-CH-CHR.csv                      Test\_code.ipynb
+SUBTLEX-CH-WF.csv                       Untitled.ipynb
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}492}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/Users/zimine/Documents/MPhil/Stimuli/Chinese Lexicon Project (Tse, 2017).csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{df}
+          \PY{c+c1}{\PYZsh{}Use header=None if no header is provided}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}492}]:}       Word\_Trad Word\_Sim  Stroke-1  Stroke-2  C\&B-Subtitle-raw-C1  \textbackslash{}
+          0            一刀       一刀         1         2             604056.0   
+          1            一口       一口         1         3             604056.0   
+          2            一分       一分         1         4             604056.0   
+          3            一切       一切         1         4             604056.0   
+          4            一心       一心         1         4             604056.0   
+          5            一手       一手         1         4             604056.0   
+          6            一斤       一斤         1         4             604056.0   
+          7            一半       一半         1         5             604056.0   
+          8            一旦       一旦         1         5             604056.0   
+          9            一生       一生         1         5             604056.0   
+          10           一共       一共         1         6             604056.0   
+          11           一再       一再         1         6             604056.0   
+          12           一同       一同         1         6             604056.0   
+          13           一向       一向         1         6             604056.0   
+          14           一早       一早         1         6             604056.0   
+          15           一些       一些         1         8             604056.0   
+          16           一併       一并         1         8             604056.0   
+          17           一來       一来         1         8             604056.0   
+          18           一味       一味         1         8             604056.0   
+          19           一定       一定         1         8             604056.0   
+          20           一直       一直         1         8             604056.0   
+          21           一則       一则         1         9             604056.0   
+          22           一度       一度         1         9             604056.0   
+          23           一律       一律         1         9             604056.0   
+          24           一流       一流         1         9             604056.0   
+          25           一致       一致         1        10             604056.0   
+          26           一面       一面         1         9             604056.0   
+          27           一旁       一旁         1        10             604056.0   
+          28           一時       一时         1        10             604056.0   
+          29           一般       一般         1        10             604056.0   
+          {\ldots}         {\ldots}      {\ldots}       {\ldots}       {\ldots}                  {\ldots}   
+          25251        纜車       缆车        25         7                277.0   
+          25252        纜索       缆索        25        10                277.0   
+          25253        纜繩       缆绳        25        19                277.0   
+          25254        鑽入       钻入        27         2               2373.0   
+          25255        鑽井       钻井        27         4               2373.0   
+          25256        鑽孔       钻孔        27         4               2373.0   
+          25257        鑽出       钻出        27         5               2373.0   
+          25258        鑽石       钻石        27         5               2373.0   
+          25259        鑽戒       钻戒        27         7               2373.0   
+          25260        鑽空       钻空        27         8               2373.0   
+          25261        鑽洞       钻洞        27         9               2373.0   
+          25262        鑽研       钻研        27         9               2373.0   
+          25263        鑽探       钻探        27        11               2373.0   
+          25264        鑽進       钻进        27        12               2373.0   
+          25265        鑽開       钻开        27        12               2373.0   
+          25266        鑽頭       钻头        27        16               2373.0   
+          25267        顴骨       颧骨        27        10                 52.0   
+          25268        鱷魚       鳄鱼        27        11                373.0   
+          25269        鱸魚       鲈鱼        27        11                 33.0   
+          25270        戇直       戆直        28         8                  2.0   
+          25271        鑿井       凿井        28         4                268.0   
+          25272        鑿洞       凿洞        28         9                268.0   
+          25273        鑿牆       凿墙        28        17                268.0   
+          25274        鸚鵡       鹦鹉        28        19                132.0   
+          25275        鬱悶       郁闷        30        12               1257.0   
+          25276        鬱結       郁结        30        12               1257.0   
+          25277        劏豬       劏猪        15        15                  NaN   
+          25278        劏雞       劏鸡        15        18                  NaN   
+          25279        嫲嫲       嫲嫲        14        14                  NaN   
+          25280        腼腆       腼腆        13        12                 35.0   
+          
+                 C\&B-Subtitle-raw-C2  C\&B-Subtitle-CD-C1  C\&B-Subtitle-CD-C2  \textbackslash{}
+          0                   4999.0              6240.0              1946.0   
+          1                  21385.0              6240.0              5406.0   
+          2                  48396.0              6240.0              6077.0   
+          3                  28202.0              6240.0              5640.0   
+          4                  83418.0              6240.0              6225.0   
+          5                  75608.0              6240.0              6186.0   
+          6                    369.0              6240.0               226.0   
+          7                  10910.0              6240.0              4341.0   
+          8                   3661.0              6240.0              2154.0   
+          9                 162725.0              6240.0              6237.0   
+          10                  7769.0              6240.0              3605.0   
+          11                 78039.0              6240.0              6230.0   
+          12                 42995.0              6240.0              6029.0   
+          13                 24596.0              6240.0              5538.0   
+          14                 26160.0              6240.0              5670.0   
+          15                113122.0              6240.0              6229.0   
+          16                 26283.0              6240.0              5393.0   
+          17                377902.0              6240.0              6242.0   
+          18                 11803.0              6240.0              4466.0   
+          19                 81657.0              6240.0              6219.0   
+          20                 46163.0              6240.0              6143.0   
+          21                  8312.0              6240.0              3735.0   
+          22                 17384.0              6240.0              5042.0   
+          23                 12028.0              6240.0              3042.0   
+          24                 11946.0              6240.0              4331.0   
+          25                  6199.0              6240.0              3135.0   
+          26                 67015.0              6240.0              6200.0   
+          27                  3900.0              6240.0              2429.0   
+          28                162611.0              6240.0              6240.0   
+          29                  4611.0              6240.0              2632.0   
+          {\ldots}                    {\ldots}                 {\ldots}                 {\ldots}   
+          25251              55587.0               136.0              5469.0   
+          25252               8632.0               136.0              2778.0   
+          25253               1679.0               136.0               809.0   
+          25254              24269.0               949.0              5410.0   
+          25255               1114.0               949.0               435.0   
+          25256               1301.0               949.0               864.0   
+          25257             129404.0               949.0              6239.0   
+          25258               6896.0               949.0              2320.0   
+          25259               4018.0               949.0              1713.0   
+          25260              15517.0               949.0              4618.0   
+          25261               2997.0               949.0              1509.0   
+          25262               4263.0               949.0              1882.0   
+          25263              12125.0               949.0              2918.0   
+          25264              55676.0               949.0              6142.0   
+          25265             126802.0               949.0              6242.0   
+          25266              49069.0               949.0              6092.0   
+          25267               5311.0                42.0              2149.0   
+          25268               7224.0               185.0              2253.0   
+          25269               7224.0                27.0              2253.0   
+          25270              46163.0                 1.0              6143.0   
+          25271               1114.0               217.0               435.0   
+          25272               2997.0               217.0              1509.0   
+          25273               3300.0               217.0              1743.0   
+          25274                131.0                92.0                91.0   
+          25275               1183.0               830.0               873.0   
+          25276              32979.0               830.0              5870.0   
+          25277               3020.0                 NaN              1271.0   
+          25278               6321.0                 NaN              2270.0   
+          25279                  NaN                 NaN                 NaN   
+          25280                 37.0                32.0                34.0   
+          
+                 C\&B-Subtitle-raw-W  C\&B-Subtitle-CD-W  
+          0                     NaN                NaN  
+          1                     NaN                NaN  
+          2                   952.0              675.0  
+          3                 21709.0             5326.0  
+          4                   137.0              128.0  
+          5                   107.0               97.0  
+          6                     NaN                NaN  
+          7                  2633.0             1673.0  
+          8                  2922.0             1939.0  
+          9                  2437.0             1650.0  
+          10                  507.0              429.0  
+          11                   68.0               61.0  
+          12                  276.0              229.0  
+          13                  510.0              440.0  
+          14                  326.0              295.0  
+          15                17133.0             4907.0  
+          16                   27.0               27.0  
+          17                  162.0              149.0  
+          18                   10.0               10.0  
+          19                20273.0             5274.0  
+          20                24551.0             5731.0  
+          21                    8.0                8.0  
+          22                   80.0               76.0  
+          23                   31.0               29.0  
+          24                  346.0              271.0  
+          25                 1087.0              826.0  
+          26                  887.0              663.0  
+          27                  129.0              121.0  
+          28                  583.0              510.0  
+          29                 2586.0             1788.0  
+          {\ldots}                   {\ldots}                {\ldots}  
+          25251                47.0               18.0  
+          25252                 4.0                3.0  
+          25253                42.0               24.0  
+          25254                 NaN                NaN  
+          25255                32.0               16.0  
+          25256                49.0               32.0  
+          25257                 NaN                NaN  
+          25258              1162.0              350.0  
+          25259                53.0               42.0  
+          25260                 NaN                NaN  
+          25261                 NaN                NaN  
+          25262                30.0               29.0  
+          25263                38.0               16.0  
+          25264                64.0               62.0  
+          25265                 NaN                NaN  
+          25266               125.0               35.0  
+          25267                51.0               41.0  
+          25268               281.0              125.0  
+          25269                27.0               24.0  
+          25270                 NaN                NaN  
+          25271                 NaN                NaN  
+          25272                 NaN                NaN  
+          25273                 NaN                NaN  
+          25274               127.0               91.0  
+          25275               414.0              336.0  
+          25276                 1.0                1.0  
+          25277                 NaN                NaN  
+          25278                 NaN                NaN  
+          25279                 NaN                NaN  
+          25280                35.0               32.0  
+          
+          [25281 rows x 10 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}493}]:} \PY{n}{newdf} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}
+          \PY{n}{newdf}
+          
+          \PY{c+c1}{\PYZsh{}[0:4] means exclude 4 and extract columns 1, 2 and 3}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}493}]:}       Word\_Sim  Stroke-1  Stroke-2
+          0           一刀         1         2
+          1           一口         1         3
+          2           一分         1         4
+          3           一切         1         4
+          4           一心         1         4
+          5           一手         1         4
+          6           一斤         1         4
+          7           一半         1         5
+          8           一旦         1         5
+          9           一生         1         5
+          10          一共         1         6
+          11          一再         1         6
+          12          一同         1         6
+          13          一向         1         6
+          14          一早         1         6
+          15          一些         1         8
+          16          一并         1         8
+          17          一来         1         8
+          18          一味         1         8
+          19          一定         1         8
+          20          一直         1         8
+          21          一则         1         9
+          22          一度         1         9
+          23          一律         1         9
+          24          一流         1         9
+          25          一致         1        10
+          26          一面         1         9
+          27          一旁         1        10
+          28          一时         1        10
+          29          一般         1        10
+          {\ldots}        {\ldots}       {\ldots}       {\ldots}
+          25251       缆车        25         7
+          25252       缆索        25        10
+          25253       缆绳        25        19
+          25254       钻入        27         2
+          25255       钻井        27         4
+          25256       钻孔        27         4
+          25257       钻出        27         5
+          25258       钻石        27         5
+          25259       钻戒        27         7
+          25260       钻空        27         8
+          25261       钻洞        27         9
+          25262       钻研        27         9
+          25263       钻探        27        11
+          25264       钻进        27        12
+          25265       钻开        27        12
+          25266       钻头        27        16
+          25267       颧骨        27        10
+          25268       鳄鱼        27        11
+          25269       鲈鱼        27        11
+          25270       戆直        28         8
+          25271       凿井        28         4
+          25272       凿洞        28         9
+          25273       凿墙        28        17
+          25274       鹦鹉        28        19
+          25275       郁闷        30        12
+          25276       郁结        30        12
+          25277       劏猪        15        15
+          25278       劏鸡        15        18
+          25279       嫲嫲        14        14
+          25280       腼腆        13        12
+          
+          [25281 rows x 3 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}494}]:} \PY{n}{dfword} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Word\PYZus{}Sim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Or dfword = newdf[newdf.columns[0:1]]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}405}]:} \PY{n}{word\PYZus{}list} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Word\PYZus{}Sim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+          \PY{n}{word\PYZus{}list}
+          \PY{n+nb}{len}\PY{p}{(}\PY{n}{word\PYZus{}list}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Convert the data type from object to list}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}405}]:} 25281
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}436}]:} \PY{n}{A} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{25281}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+              \PY{n}{a} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{word\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+              \PY{n}{A}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+              
+          \PY{c+c1}{\PYZsh{}Segment each word into two characters }
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}436}]:} '刀'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}495}]:} \PY{n}{B} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+          \PY{n}{C} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+          
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{25281}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+              \PY{n}{b} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{c} \PY{o}{=} \PY{n}{A}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+              \PY{n}{B}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+              \PY{n}{C}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+              
+          \PY{c+c1}{\PYZsh{}Store the first character in list B and second character in list C}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}496}]:} \PY{n}{df1} \PY{o}{=} \PY{n}{B}
+          \PY{n}{df1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data1}\PY{p}{)}
+          
+          \PY{n}{df2} \PY{o}{=} \PY{n}{C}
+          \PY{n}{df2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data2}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Convert list B and C into dataframe}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}497}]:} \PY{n}{title} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Character\PYZhy{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Character\PYZhy{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{df1}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{n}{title}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df2}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{n}{title}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Assign header: Character\PYZhy{}1 and Character\PYZhy{}2 to dataframe B and C respectively }
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}501}]:} \PY{n}{df3} \PY{o}{=} \PY{n}{df1}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{df2}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{how}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Combine dataframe B and C together}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}501}]:}       Character-1 Character-2
+          0               一           刀
+          1               一           口
+          2               一           分
+          3               一           切
+          4               一           心
+          5               一           手
+          6               一           斤
+          7               一           半
+          8               一           旦
+          9               一           生
+          10              一           共
+          11              一           再
+          12              一           同
+          13              一           向
+          14              一           早
+          15              一           些
+          16              一           并
+          17              一           来
+          18              一           味
+          19              一           定
+          20              一           直
+          21              一           则
+          22              一           度
+          23              一           律
+          24              一           流
+          25              一           致
+          26              一           面
+          27              一           旁
+          28              一           时
+          29              一           般
+          {\ldots}           {\ldots}         {\ldots}
+          25251           缆           车
+          25252           缆           索
+          25253           缆           绳
+          25254           钻           入
+          25255           钻           井
+          25256           钻           孔
+          25257           钻           出
+          25258           钻           石
+          25259           钻           戒
+          25260           钻           空
+          25261           钻           洞
+          25262           钻           研
+          25263           钻           探
+          25264           钻           进
+          25265           钻           开
+          25266           钻           头
+          25267           颧           骨
+          25268           鳄           鱼
+          25269           鲈           鱼
+          25270           戆           直
+          25271           凿           井
+          25272           凿           洞
+          25273           凿           墙
+          25274           鹦           鹉
+          25275           郁           闷
+          25276           郁           结
+          25277           劏           猪
+          25278           劏           鸡
+          25279           嫲           嫲
+          25280           腼           腆
+          
+          [25281 rows x 2 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}525}]:} \PY{n}{df4} \PY{o}{=} \PY{n}{df3}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{how}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Combine the new (df3) dataframe with the original (df) dataframe}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}559}]:} \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}Nonword Selection\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+          
+          \PY{c+c1}{\PYZsh{}Select the first character with its stoke number }
+          \PY{n}{df5} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{append} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{df4}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stroke\PYZhy{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{5}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Select the second character with its stoke number }
+          \PY{n}{df6} \PY{o}{=} \PY{n}{df5}\PY{o}{.}\PY{n}{append} \PY{o}{=} \PY{n}{df5}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{df5}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stroke\PYZhy{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{4}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Select the first character with its frequency}
+          \PY{n}{df7} \PY{o}{=} \PY{n}{df6}\PY{o}{.}\PY{n}{append} \PY{o}{=} \PY{n}{df6}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{df6}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C\PYZam{}B\PYZhy{}Subtitle\PYZhy{}raw\PYZhy{}C1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{9000}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Select the second character with its frequency}
+          \PY{n}{df8} \PY{o}{=} \PY{n}{df7}\PY{o}{.}\PY{n}{append} \PY{o}{=} \PY{n}{df7}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{df7}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C\PYZam{}B\PYZhy{}Subtitle\PYZhy{}raw\PYZhy{}C2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{20000}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}Word Generation\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+          
+          \PY{c+c1}{\PYZsh{}Select the combined word with its frequency (only for word selection)}
+          \PY{n}{df9} \PY{o}{=} \PY{n}{df8}\PY{o}{.}\PY{n}{append} \PY{o}{=} \PY{n}{df8}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{df8}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C\PYZam{}B\PYZhy{}Subtitle\PYZhy{}raw\PYZhy{}W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{7000}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}560}]:} \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}Nonword Generation\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+          \PY{n}{df8}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}560}]:}       Character-1 Character-2 Word\_Trad Word\_Sim  Stroke-1  Stroke-2  \textbackslash{}
+          1827            且           说        且說       且说         5        14   
+          1833            世           事        世事       世事         5         8   
+          1839            世           家        世家       世家         5        10   
+          1840            世           间        世間       世间         5        12   
+          1841            世           道        世道       世道         5        13   
+          1849            主           任        主任       主任         5         6   
+          1850            主           因        主因       主因         5         6   
+          1852            主           次        主次       主次         5         6   
+          1855            主           见        主見       主见         5         7   
+          1857            主           事        主事       主事         5         8   
+          1864            主           要        主要       主要         5         9   
+          1869            主           动        主動       主动         5        11   
+          1872            主           将        主將       主将         5        11   
+          1874            主           从        主從       主从         5        11   
+          1875            主           教        主教       主教         5        11   
+          1879            主           队        主隊       主队         5        12   
+          1880            主           干        主幹       主干         5        13   
+          1881            主           意        主意       主意         5        13   
+          1885            主           演        主演       主演         5        14   
+          1886            主           管        主管       主管         5        14   
+          1892            主           机        主機       主机         5        16   
+          1894            主           办        主辦       主办         5        16   
+          1896            主           题        主題       主题         5        18   
+          1899            主           体        主體       主体         5        23   
+          1906            他           方        他方       他方         5         4   
+          1907            他           日        他日       他日         5         4   
+          1908            他           们        他們       他们         5        10   
+          1909            他           杀        他殺       他杀         5        11   
+          1910            他           处        他處       他处         5        11   
+          1913            付           方        付方       付方         5         4   
+          {\ldots}           {\ldots}         {\ldots}       {\ldots}      {\ldots}       {\ldots}       {\ldots}   
+          25033           变           更        變更       变更        23         7   
+          25036           变           性        變性       变性        23         8   
+          25037           变           法        變法       变法        23         8   
+          25038           变           长        變長       变长        23         8   
+          25041           变           为        變為       变为        23         9   
+          25042           变           相        變相       变相        23         9   
+          25044           变           动        變動       变动        23        11   
+          25045           变           得        變得       变得        23        11   
+          25047           变           通        變通       变通        23        11   
+          25054           变           种        變種       变种        23        14   
+          25065           显           得        顯得       显得        23        11   
+          25067           显           现        顯現       显现        23        11   
+          25069           显           然        顯然       显然        23        12   
+          25085           惊           世        驚世       惊世        23         5   
+          25086           惊           叫        驚叫       惊叫        23         5   
+          25090           惊           动        驚動       惊动        23        11   
+          25093           惊           喜        驚喜       惊喜        23        12   
+          25103           惊           觉        驚覺       惊觉        23        20   
+          25107           体           位        體位       体位        23         7   
+          25108           体           系        體系       体系        23         7   
+          25114           体           重        體重       体重        23         9   
+          25115           体           面        體面       体面        23         9   
+          25118           体           能        體能       体能        23        10   
+          25121           体           现        體現       体现        23        11   
+          25125           体           会        體會       体会        23        13   
+          25167           让           出        讓出       让出        24         5   
+          25168           让           位        讓位       让位        24         7   
+          25171           让           给        讓給       让给        24        12   
+          25172           让           开        讓開       让开        24        12   
+          25173           让           路        讓路       让路        24        13   
+          
+                 C\&B-Subtitle-raw-C1  C\&B-Subtitle-raw-C2  C\&B-Subtitle-CD-C1  \textbackslash{}
+          1827               24774.0             281841.0              5463.0   
+          1833               21566.0             179716.0              5168.0   
+          1839               21566.0             112387.0              5168.0   
+          1840               21566.0              60047.0              5168.0   
+          1841               21566.0             230531.0              5168.0   
+          1849               28628.0              34349.0              5684.0   
+          1850               28628.0              77540.0              5684.0   
+          1852               28628.0              58108.0              5684.0   
+          1855               28628.0              85723.0              5684.0   
+          1857               28628.0             179716.0              5684.0   
+          1864               28628.0             355730.0              5684.0   
+          1869               28628.0              49274.0              5684.0   
+          1872               28628.0              30460.0              5684.0   
+          1874               28628.0              69789.0              5684.0   
+          1875               28628.0              21768.0              5684.0   
+          1879               28628.0              27111.0              5684.0   
+          1880               28628.0              60971.0              5684.0   
+          1881               28628.0             103354.0              5684.0   
+          1885               28628.0              23373.0              5684.0   
+          1886               28628.0              29106.0              5684.0   
+          1892               28628.0              48902.0              5684.0   
+          1894               28628.0              28706.0              5684.0   
+          1896               28628.0              37524.0              5684.0   
+          1899               28628.0              26590.0              5684.0   
+          1906              564477.0              52743.0              6242.0   
+          1907              564477.0              23151.0              6242.0   
+          1908              564477.0             701754.0              6242.0   
+          1909              564477.0              47122.0              6242.0   
+          1910              564477.0              28742.0              6242.0   
+          1913               10729.0              52743.0              4134.0   
+          {\ldots}                    {\ldots}                  {\ldots}                 {\ldots}   
+          25033              30205.0              35397.0              5828.0   
+          25036              30205.0              28102.0              5828.0   
+          25037              30205.0              60750.0              5828.0   
+          25038              30205.0              42596.0              5828.0   
+          25041              30205.0             249231.0              5828.0   
+          25042              30205.0              47856.0              5828.0   
+          25044              30205.0              49274.0              5828.0   
+          25045              30205.0             208054.0              5828.0   
+          25047              30205.0              26617.0              5828.0   
+          25054              30205.0              42396.0              5828.0   
+          25065              10978.0             208054.0              4352.0   
+          25067              10978.0             137777.0              4352.0   
+          25069              10978.0              91514.0              4352.0   
+          25085               9696.0              21566.0              4110.0   
+          25086               9696.0              41269.0              4110.0   
+          25090               9696.0              49274.0              4110.0   
+          25093               9696.0              54432.0              4110.0   
+          25103               9696.0              81155.0              4110.0   
+          25107              26590.0              31427.0              5453.0   
+          25108              26590.0              29334.0              5453.0   
+          25114              26590.0              39372.0              5453.0   
+          25115              26590.0              67015.0              5453.0   
+          25118              26590.0             241617.0              5453.0   
+          25121              26590.0             137777.0              5453.0   
+          25125              26590.0             321488.0              5453.0   
+          25167             125114.0             129404.0              6230.0   
+          25168             125114.0              31427.0              6230.0   
+          25171             125114.0             123887.0              6230.0   
+          25172             125114.0             126802.0              6230.0   
+          25173             125114.0              23462.0              6230.0   
+          
+                 C\&B-Subtitle-CD-C2  C\&B-Subtitle-raw-W  C\&B-Subtitle-CD-W  
+          1827               6243.0                 NaN                NaN  
+          1833               6237.0               128.0              117.0  
+          1839               6236.0                49.0               39.0  
+          1840               6174.0               178.0              133.0  
+          1841               6241.0                74.0               67.0  
+          1849               5769.0               935.0              276.0  
+          1850               6201.0                 5.0                5.0  
+          1852               6183.0                11.0               10.0  
+          1855               6220.0                47.0               42.0  
+          1857               6237.0                 NaN                NaN  
+          1864               6243.0              1393.0             1115.0  
+          1869               6044.0               645.0              529.0  
+          1872               5177.0                 4.0                4.0  
+          1874               6209.0                 6.0                5.0  
+          1875               4579.0               337.0              101.0  
+          1879               4217.0                20.0               17.0  
+          1880               6156.0                 2.0                2.0  
+          1881               6238.0              6144.0             3207.0  
+          1885               3897.0                 NaN                NaN  
+          1886               5850.0               750.0              493.0  
+          1892               5953.0               137.0               87.0  
+          1894               5725.0                42.0               40.0  
+          1896               5958.0               941.0              591.0  
+          1899               5453.0                18.0               14.0  
+          1906               6142.0                 3.0                2.0  
+          1907               5161.0                 4.0                4.0  
+          1908               6243.0            140460.0             6199.0  
+          1909               4962.0                 NaN                NaN  
+          1910               5835.0                 4.0                4.0  
+          1913               6142.0                 NaN                NaN  
+          {\ldots}                   {\ldots}                 {\ldots}                {\ldots}  
+          25033              5991.0                62.0               55.0  
+          25036              5317.0               155.0               82.0  
+          25037              6091.0                 1.0                1.0  
+          25038              5903.0                 NaN                NaN  
+          25041              6241.0               118.0              110.0  
+          25042              6109.0                20.0               16.0  
+          25044              6044.0               138.0              117.0  
+          25045              6239.0                 1.0                1.0  
+          25047              5569.0                36.0               28.0  
+          25054              6034.0               148.0               43.0  
+          25065              6239.0               768.0              634.0  
+          25067              6240.0               121.0               99.0  
+          25069              6232.0              3566.0             2211.0  
+          25085              5168.0                 NaN                NaN  
+          25086              5999.0                29.0               24.0  
+          25090              6044.0                57.0               54.0  
+          25093              5972.0              2109.0             1315.0  
+          25103              6180.0                 NaN                NaN  
+          25107              5606.0                 NaN                NaN  
+          25108              5675.0               183.0              143.0  
+          25114              6073.0               458.0              325.0  
+          25115              6200.0               221.0              197.0  
+          25118              6243.0                54.0               34.0  
+          25121              6240.0               222.0              198.0  
+          25125              6242.0               494.0              410.0  
+          25167              6239.0                21.0               19.0  
+          25168              5606.0                26.0               24.0  
+          25171              6235.0                33.0               33.0  
+          25172              6242.0               271.0              211.0  
+          25173              5258.0                86.0               72.0  
+          
+          [3740 rows x 12 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{character\PYZus{}1} \PY{o}{=} \PY{n}{df7}\PY{o}{.}\PY{n}{append}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Character\PYZhy{}1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+        \PY{n}{character\PYZus{}2} \PY{o}{=} \PY{n}{df7}\PY{o}{.}\PY{n}{append}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Character\PYZhy{}2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{chara\PYZus{}first} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{character\PYZus{}1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{chara\PYZus{}second} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{character\PYZus{}2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{p} \PY{o}{=} \PY{n+nb}{str}
+        \PY{n}{pseudoword} \PY{o}{=} \PY{p}{[}\PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{chara\PYZus{}first}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{permutations}\PY{p}{(}\PY{n}{chara\PYZus{}second}\PY{p}{)}\PY{p}{]}
+        \PY{n}{Pseudoword}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{pseudoword}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
