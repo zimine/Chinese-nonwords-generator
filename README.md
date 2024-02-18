@@ -1,5 +1,3 @@
-# Chinese_pseudoword_generator 
-
 ### Package description
 
 This package is developed based on [`strokes`](https://pypi.org/project/strokes/) and [`pinyin`](https://pypi.org/project/pinyin/). Use this package to generate Chinese disyllabic nonwords. 
