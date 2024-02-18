@@ -60,7 +60,7 @@ class ChineseNonwords:
             self.subset["C&B_log"] <= self.logfreq_max
         )
         select = self.subset.loc[(stroke_mask) & (num_nei_mask) & (logfreq_mask)]
-        sample = select.sample(n=2 * self.N, random_state=42)
+        sample = select.sample(n=2 * self.N, random_state=self.random_state)
         return sample
 
     def get_randomized_words(self, sample):
