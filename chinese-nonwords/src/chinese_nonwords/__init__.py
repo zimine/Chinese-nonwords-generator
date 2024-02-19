@@ -17,8 +17,6 @@ class ChineseNonwords:
         N=10,
         random_state=42,
     ):
-        # self.subset = pd.read_csv("./data/subset.csv")
-        # self.word = pd.read_csv("./data/word.csv")
 
         # Accessing files within a package subdirectory
         data_path = resources.files("chinese_nonwords") / "data"
@@ -43,13 +41,37 @@ class ChineseNonwords:
         self.N = N
         self.random_state = random_state
 
-    def generate(self):
-        df = self.get_randomized_words(self.generate_nonwords())
-        table = tabulate(df, headers="keys", tablefmt="grid")
-        # print(table)
-        return table
-
     def generate_nonwords(self):
+        df = self.get_randomized_words(self.get_nonwords())
+        table = tabulate(df, headers="keys", tablefmt="grid")
+        return table
+    
+    def generate_words(self):
+        df = self.get_words()
+        table = tabulate(df, headers="keys", tablefmt="grid")
+        return table
+    
+    def get_words(self):
+        stroke_mask = (self.word["Stroke-mean-Sim"] >= self.stroke_min) & (
+            self.word["Stroke-mean-Sim"] <= self.stroke_max
+        )
+        num_nei_mask = (self.word["Neighborhood-mean"] >= self.num_nei_min) & (
+            self.word["Neighborhood-mean"] <= self.num_nei_max
+        )
+        logfreq_mask = (self.word["C&B-Subtitle-log-W"] >= self.logfreq_min) & (
+            self.word["C&B-Subtitle-log-W"] <= self.logfreq_max
+        )
+        select = self.word.loc[(stroke_mask) & (num_nei_mask) & (logfreq_mask)]
+        sample = select.sample(n=self.N, random_state=self.random_state)
+        wordlist = sample[['Word_Sim', 'C&B-Subtitle-log-W', 'HD_M', 'Stroke-mean-Sim', 'Neighborhood-mean']].reset_index(drop=True)
+        wordlist = wordlist.rename(columns={'Word_Sim': 'word',
+                                            'C&B-Subtitle-log-W': 'logfreq',
+                                            'Stroke-mean-Sim': 'stroke',
+                                            'HD_M': 'homophone_density',
+                                            'Neighborhood-mean': 'num_neighbor'})
+        return wordlist
+
+    def get_nonwords(self):
         stroke_mask = (self.subset["Stroke"] >= self.stroke_min) & (
             self.subset["Stroke"] <= self.stroke_max
         )
