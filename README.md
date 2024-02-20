@@ -72,7 +72,7 @@ cw = ChineseNonwords.generate_words(stroke_min=2,
 
 The output is in the same format as the nonword list. 
 
-```python
+```
 print(cw)
 +----+--------+-----------+---------------------+----------+----------------+
 |    | word   |   logfreq |   homophone_density |   stroke |   num_neighbor |
