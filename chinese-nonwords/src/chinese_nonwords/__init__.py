@@ -8,12 +8,12 @@ from importlib import resources
 class ChineseNonwords:
     def __init__(
         self,
-        stroke_min=2,
-        stroke_max=15,
-        num_nei_min=100,
-        num_nei_max=200,
-        logfreq_min=2,
-        logfreq_max=6,
+        stroke_min=1,
+        stroke_max=25,
+        num_nei_min=8,
+        num_nei_max=307,
+        logfreq_min=0,
+        logfreq_max=6.31,
         N=10,
         random_state=42,
     ):
