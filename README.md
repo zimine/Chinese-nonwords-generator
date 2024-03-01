@@ -33,7 +33,7 @@ cnw = ChineseNonwords.generate_nonwords(stroke_min=2,
                                         N=10, 
                                         random_state=42)
 ```
-Once specified, the run the `generate_nonwords()` function to get a tabulated list of nonwords. The pinyin of these nonwords were cross-checked with the [SUBTLEX-CH][1] to make sure it does not appear in the given list of known disyllabic words. The frequency information is extracted from [SUBTLEX-CH][1], stroke count from the [`strokes`](https://pypi.org/project/strokes/) package, and the rest of the lexical properties from [`Mandarin-Neighborhood-Statistics`](https://github.com/karlneergaard/Mandarin-Neighborhood-Statistics).
+Once specified, the run the `generate_nonwords()` function to get a tabulated list of nonwords. The pinyin of these nonwords were cross-checked with the [SUBTLEX-CH][1] to make sure it does not appear in the given list of known disyllabic words. The frequency information is extracted from (SUBTLEX-CH)[1], stroke count from the [`strokes`](https://pypi.org/project/strokes/) package, and the rest of the lexical properties from [`Mandarin-Neighborhood-Statistics`](https://github.com/karlneergaard/Mandarin-Neighborhood-Statistics).
 
 Note that the length of the output is not always the same as specified (N), as there are nonwords that are phonologically similar to real disyllabic words, which are excluded. To generate another list with the same arguments, change `random_state` to a different value. 
 
